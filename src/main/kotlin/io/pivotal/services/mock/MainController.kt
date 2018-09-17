@@ -2,22 +2,27 @@ package io.pivotal.services.mock
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.RequestEntity
 import org.springframework.http.ResponseEntity
+import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
+import java.net.URI
 
-@RestController
+@Controller
 class MainController {
 
     val log: Logger = LoggerFactory.getLogger(MainController::class.java)
-    lateinit var displayableRequest: DisplayableRequest
+    var displayableRequest: DisplayableRequest = DisplayableRequest(RequestEntity(HttpMethod.GET, URI.create("")))
 
     @GetMapping("/last")
-    fun getLastBody(requestEntity: RequestEntity<String>): DisplayableRequest {
-        return displayableRequest
+    fun getLastBody(model: Model): String {
+        model.addAttribute("displayableRequest", displayableRequest)
+        return "last"
     }
-    @GetMapping
+    @GetMapping @ResponseBody
     fun logGetAndReturn(requestEntity: RequestEntity<String>): ResponseEntity<String> {
         displayableRequest = DisplayableRequest(requestEntity)
         log.info("Get Request Path: {}", requestEntity.url.path)
@@ -25,7 +30,7 @@ class MainController {
         log.info("Get Request Headers: {}", requestEntity.headers)
         return ResponseEntity(HttpStatus.OK)
     }
-    @PostMapping
+    @PostMapping @ResponseBody
     fun logPostAndReturn(requestEntity: RequestEntity<String>): ResponseEntity<String> {
         displayableRequest = DisplayableRequest(requestEntity)
         log.info("Post Request Path: {}", requestEntity.url.path)
@@ -33,7 +38,7 @@ class MainController {
         log.info("Post Request Body: {}", requestEntity.body)
         return ResponseEntity(HttpStatus.CREATED)
     }
-    @PutMapping
+    @PutMapping @ResponseBody
     fun logPutAndReturn(requestEntity: RequestEntity<String>): ResponseEntity<String> {
         displayableRequest = DisplayableRequest(requestEntity)
         log.info("Put Request Path: {}", requestEntity.url.path)
@@ -41,7 +46,7 @@ class MainController {
         log.info("Put Request Body: {}", requestEntity.body)
         return ResponseEntity(HttpStatus.NO_CONTENT)
     }
-    @PatchMapping
+    @PatchMapping @ResponseBody
     fun logPatchAndReturn(requestEntity: RequestEntity<String>): ResponseEntity<String> {
         displayableRequest = DisplayableRequest(requestEntity)
         log.info("Patch Request Path: {}", requestEntity.url.path)
@@ -49,7 +54,7 @@ class MainController {
         log.info("Patch Request Body: {}", requestEntity.body)
         return ResponseEntity(HttpStatus.NO_CONTENT)
     }
-    @DeleteMapping
+    @DeleteMapping @ResponseBody
     fun logDeleteAndReturn(requestEntity: RequestEntity<String>): ResponseEntity<String> {
         displayableRequest = DisplayableRequest(requestEntity)
         log.info("Delete Request Path: {}", requestEntity.url.path)

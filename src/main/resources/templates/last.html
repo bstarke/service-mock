@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Service Mock-Display Last Request</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron text-center">
+        <h2>Last Request Entity</h2>
+    </div>
+    <div class="row">
+        <div class="col-sm-2"><h4>Method :</h4></div>
+        <div class="col-sm-10"><h4><span th:text="${displayableRequest.requestEntity.method}"></span></h4></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2"><h4>URL :</h4></div>
+        <div class="col-sm-10"><h4><span th:text="${displayableRequest.requestEntity.url}"/></h4></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2"><h4>Body :</h4></div>
+        <div class="col-sm-10"><h4><span th:text="${displayableRequest.requestEntity.body}"/></h4></div>
+    </div>
+    <br/>
+    <h4>Headers :</h4>
+    <div class="row col-sm-12 table-responsive">
+        <table id="Headers" class="table">
+            <thead>
+            <tr>
+                <th>Key</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="header, rowStat: ${displayableRequest.requestEntity.headers}"
+                th:style="${rowStat.odd} ? 'color: black' : 'color: navy;'">
+                <td th:text="${header.key}"></td>
+                <td th:text="${header.value}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
