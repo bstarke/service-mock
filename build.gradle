@@ -50,11 +50,11 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-cloud-connectors')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('org.springframework.boot:spring-boot-devtools')
 	compile('com.fasterxml.jackson.module:jackson-module-kotlin')
 	compile('org.springframework.cloud:spring-cloud-starter-sleuth')
 	compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	compile("org.jetbrains.kotlin:kotlin-reflect")
+	compileOnly('org.springframework.boot:spring-boot-devtools')
 	compileOnly('org.springframework.boot:spring-boot-configuration-processor')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

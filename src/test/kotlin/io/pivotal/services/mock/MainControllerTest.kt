@@ -33,9 +33,10 @@ class MainControllerTest {
         val entity = HttpEntity<String>("{\"Hello\": \"Simon\"}", headers)
         restTemplate.postForLocation("/bs/post/last", entity)
         val lastRequest = restTemplate.getForEntity<String>("/last")
-        assertThat(lastRequest.body.toString()).contains("\"Content-Type\":[\"application/json")
+        assertThat(lastRequest.body.toString()).contains("Content-Type")
+        assertThat(lastRequest.body.toString()).contains("application/json;charset=UTF-8")
         assertThat(lastRequest.body.toString()).contains("/bs/post/last")
-        assertThat(lastRequest.body.toString()).contains("\"body\":\"{\\\"Hello\\\": \\\"Simon\\\"}\"")
+        assertThat(lastRequest.body.toString()).contains("{&quot;Hello&quot;: &quot;Simon&quot;}")
     }
 
     @Test
